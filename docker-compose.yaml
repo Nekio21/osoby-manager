@@ -1,0 +1,25 @@
+services:
+  app:
+    build: .
+    container_name: osoby_app
+    working_dir: /app
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_started
+  db:
+    image: mysql:8.0
+    container_name: osoby_db
+    environment:
+      MYSQL_DATABASE: osoby
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
